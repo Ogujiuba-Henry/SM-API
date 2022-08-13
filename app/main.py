@@ -22,7 +22,7 @@ app.include_router(vote.router)
 
 @app.get("/")    #decorator using fastapi instance and http get method and root path(/) ->http://127.0.0.1:8000/
 def root():
-    return{"message": "WELCOME TO gujus-api!!!"}
+    return{"message": "Welcome to gujus-api!!!"}
 
 
 

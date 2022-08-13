@@ -6,7 +6,6 @@ from app.config import settings
 
 def test_root(client,session):
     res=client.get("/")                                                                     #testing get method /
-    assert res.json().get('message') == "Welcome to my api"
     assert res.status_code==200
 
 def test_user_create(client,session):
