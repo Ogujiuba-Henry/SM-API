@@ -1,0 +1,40 @@
+name: Build and deploy my API
+
+on:                             #triggers when our CI/CD starts
+  push:
+    branches:                   #list of branches to push to start CI/CD
+      - "main"
+  pull_request:                 #list of branches to pull to start CI/CD  
+    branches:
+      - "main"
+
+jobs:
+  job1:
+    environment:                                  #referencing our setup github environment
+      name: SM-Testing
+    env:                                          #providing our environment variables
+      DATABASE_HOSTNAME:  {{secrets.DATABASE_HOSTNAME}}
+      DATABASE_PORT:  {{secrets.DATABASE_PORT}}
+      DATABASE_PASSWORD:  {{secrets.DATABASE_PASSWORD}}
+      DATABASE_NAME:  {{settings.DATABASE_NAME}}
+      DATABASE_USERNAME:  {{secrets.DATABASE_USERNAME}}
+      SECRET_KEY: {{secrets.SECRET_KEY}}
+      ALGORITHM:  {{secrets.ALGORITHM}}
+      ACCESS_TOKEN_EXPIRE_MINUTES:  {{secrets.ACCESS_TOKEN_EXPIRE_MINUTES}}
+    runs-on: windows-latest                       #the runner we want our code to run on
+    steps:
+      - name: pulling git repository
+        uses: actions/checkout@v2               #actual command that runs to perform action || checkout is built in action to pull code
+      - name: setting up python version 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.9"                    #specifies version of python you want
+      - name: Update pip
+        run: python -m pip install --upgrade pip
+      - name: Install all dependencies
+        run: pip install -r requirements.txt
+      - name: Test with pytest
+        run:  |                              # when you want to run more than one command
+          pip install pytest
+          pytest
+

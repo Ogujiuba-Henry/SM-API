@@ -7,7 +7,7 @@ from pydantic.types import conint
 class Post(BaseModel):  # specifies what the body of post should look like
       title: str 
       content: str 
-      published: bool
+      published: bool = True
       class Config:
             orm_mode=True #Pydantic reads only dict, convert sqlalchemy model to pydantic model
 
