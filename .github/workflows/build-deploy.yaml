@@ -35,7 +35,7 @@ jobs:
           --health-timeout 5s
           --health-retries 5
 
-    runs-on: windows-latest                       #the runner we want our code to run on
+    runs-on: ubuntu-latest                       #the runner we want our code to run on
     steps:
       - name: pulling git repository
         uses: actions/checkout@v2               #actual command that runs to perform action || checkout is built in action to pull code
