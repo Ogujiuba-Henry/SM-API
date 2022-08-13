@@ -9,7 +9,7 @@ on:                             #triggers when our CI/CD starts
       - "main"
 
 jobs:
-  job1:
+  build:
     environment:                                  #referencing our setup github environment
       name: SM-Testing
     env:                                          #providing our environment variables
@@ -51,4 +51,21 @@ jobs:
         run:  |                              # when you want to run more than one command
           pip install pytest
           pytest
+
+  deploy:
+    runs-on:  ubuntu-latest
+    needs:  [build]
+    environment:  SM-production
+
+    steps:
+      - name: pulling git repository
+        uses: actions/checkout@v2
+      - name: deploying to heroku
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+
+
 
